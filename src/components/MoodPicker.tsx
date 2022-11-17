@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { theme } from '../theme';
 import { MoodOptionType } from '../types';
 
 const moodOptions: MoodOptionType[] = [
@@ -48,14 +49,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedMoodItem: {
-    borderColor: '#f0000055',
+    borderColor: theme.colorRed,
     borderWidth: 1,
-    backgroundColor: '#454C73',
+    backgroundColor: theme.colorPurple,
   },
   selectedMoodDescription: {
     fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#454c73',
+    color: theme.colorPurple,
   },
 });
