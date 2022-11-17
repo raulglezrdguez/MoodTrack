@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
-import { useAppContext } from '../App.provider';
+import { useAppContext } from '../context/App.provider';
 import { theme } from '../theme';
 import { MoodOptionType } from '../types';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { useAppContext } from '../App.provider';
+import { useAppContext } from '../context/App.provider';
 import { MoodItemRow } from '../components/MoodItemRow';
 
 export const History: React.FC = () => {

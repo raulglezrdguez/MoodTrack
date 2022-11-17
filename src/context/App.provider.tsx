@@ -2,25 +2,14 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { MoodOptionType, MoodOptionWithTimestamp } from './types';
+import { MoodOptionType, MoodOptionWithTimestamp } from '../types';
+import { AppContext } from './App.context';
 
 const storageKey = 'moods-data';
 
 type AppData = {
   moods: MoodOptionWithTimestamp[];
 };
-
-type AppContextType = {
-  moodList: MoodOptionWithTimestamp[];
-  handleSelectedMood: (mood: MoodOptionType) => void;
-};
-
-const defaultValue: AppContextType = {
-  moodList: [],
-  handleSelectedMood: () => {},
-};
-
-const AppContext = React.createContext<AppContextType>(defaultValue);
 
 type AppProviderProps = {
   children: React.ReactNode;
