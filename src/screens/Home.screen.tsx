@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { MoodPicker } from '../components/MoodPicker';
 
 export const Home: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+      <MoodPicker />
     </View>
   );
 };
@@ -13,9 +14,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
   },
 });
