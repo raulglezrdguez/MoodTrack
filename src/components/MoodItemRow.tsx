@@ -11,42 +11,41 @@ type MoodItemRowProps = {
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
   return (
     <View style={styles.moodItem}>
-      <View style={styles.iconAndDescription}>
-        <Text style={styles.moodValue}>{item.mood.emoji}</Text>
+      <Text style={styles.moodValue}>{item.mood.emoji}</Text>
+      <View style={styles.descriptionAndDate}>
         <Text style={styles.moodDescription}>{item.mood.description}</Text>
+        <Text style={styles.moodDate}>
+          {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
+        </Text>
       </View>
-      <Text style={styles.moodDate}>
-        {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  moodValue: {
-    textAlign: 'center',
-    fontSize: 40,
-    marginRight: 10,
-  },
-  moodDate: {
-    textAlign: 'center',
-    color: theme.colorLavender,
-  },
   moodItem: {
     backgroundColor: 'white',
     marginBottom: 10,
     padding: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  moodValue: {
+    textAlign: 'center',
+    fontSize: 40,
+    marginRight: 10,
+  },
+  descriptionAndDate: {
+    justifyContent: 'flex-start',
   },
   moodDescription: {
     fontSize: 18,
     color: theme.colorPurple,
     fontWeight: 'bold',
   },
-  iconAndDescription: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  moodDate: {
+    textAlign: 'center',
+    color: theme.colorLavender,
   },
 });
