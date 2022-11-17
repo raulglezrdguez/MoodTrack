@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { useAppContext } from '../App.provider';
 import { theme } from '../theme';
 import { MoodOptionType } from '../types';
 
@@ -11,32 +12,29 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '😤', description: 'frustrated' },
 ];
 
-type MoodPickerProps = {
-  onSelectMood: (mood: MoodOptionType) => void;
-};
-
-export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
+export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+
+  const { handleSelectedMood } = useAppContext();
 
   const handleSelectMood = useCallback(() => {
     if (selectedMood) {
-      onSelectMood(selectedMood);
+      handleSelectedMood(selectedMood);
       setSelectedMood(undefined);
     }
-  }, [onSelectMood, selectedMood]);
+  }, [handleSelectedMood, selectedMood]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.textTitle}>How are you right now?</Text>
       <View style={styles.moodList}>
         {moodOptions.map(option => (
-          <View>
+          <View key={option.emoji}>
             <Pressable
               style={[
                 styles.moodItem,
                 option === selectedMood ? styles.selectedMoodItem : null,
               ]}
-              key={option.emoji}
               onPress={() => setSelectedMood(option)}>
               <Text>{option.emoji}</Text>
             </Pressable>
@@ -46,7 +44,14 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
           </View>
         ))}
       </View>
-      <Pressable style={styles.button} onPress={handleSelectMood}>
+      <Pressable
+        style={styles.button}
+        onPress={handleSelectMood}
+        android_ripple={{
+          color: theme.colorBlue,
+          borderless: true,
+          radius: 40,
+        }}>
         <Text style={styles.textButton}>Choose</Text>
       </Pressable>
     </View>
