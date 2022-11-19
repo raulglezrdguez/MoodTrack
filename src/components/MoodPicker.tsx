@@ -5,8 +5,6 @@ import {
   Text,
   Pressable,
   Image,
-  Platform,
-  UIManager,
   LayoutAnimation,
 } from 'react-native';
 
@@ -23,13 +21,6 @@ const moodOptions: MoodOptionType[] = [
 ];
 
 const imgSource = require('../assets/happy.png');
-
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();

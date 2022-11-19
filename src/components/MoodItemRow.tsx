@@ -1,5 +1,11 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useCallback, useContext } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  LayoutAnimation,
+} from 'react-native';
 import format from 'date-fns/format';
 import { MoodOptionWithTimestamp } from '../types';
 import { theme } from '../theme';
@@ -13,6 +19,16 @@ type MoodItemRowProps = {
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
   const { handleDeleteMood } = useContext(AppContext);
 
+  const handleDelete = useCallback(() => {
+    LayoutAnimation.configureNext({
+      duration: 300,
+      create: { type: 'easeInEaseOut', property: 'opacity' },
+      update: { type: 'easeInEaseOut', property: 'opacity' },
+      delete: { type: 'easeInEaseOut', property: 'opacity' },
+    });
+    handleDeleteMood(item);
+  }, [handleDeleteMood, item]);
+
   return (
     <View style={styles.moodItem}>
       <Text style={styles.moodValue}>{item.mood.emoji}</Text>
@@ -22,7 +38,7 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
           {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
         </Text>
       </View>
-      <Pressable hitSlop={16} onPress={() => handleDeleteMood(item)}>
+      <Pressable hitSlop={16} onPress={handleDelete}>
         <DeleteIcon color={theme.colorRed} />
       </Pressable>
     </View>
