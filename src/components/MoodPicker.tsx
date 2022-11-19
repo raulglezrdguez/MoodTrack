@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image } from 'react-native';
+
 import { useAppContext } from '../context/App.provider';
 import { theme } from '../theme';
 import { MoodOptionType } from '../types';
@@ -12,8 +13,11 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '😤', description: 'frustrated' },
 ];
 
+const imgSource = require('../assets/happy.png');
+
 export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+  const [hasSelected, setHasSelected] = useState<boolean>(false);
 
   const { handleSelectedMood } = useAppContext();
 
@@ -21,8 +25,20 @@ export const MoodPicker: React.FC = () => {
     if (selectedMood) {
       handleSelectedMood(selectedMood);
       setSelectedMood(undefined);
+      setHasSelected(true);
     }
   }, [handleSelectedMood, selectedMood]);
+
+  if (hasSelected) {
+    return (
+      <View style={styles.container}>
+        <Image source={imgSource} style={styles.image} resizeMode="contain" />
+        <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+          <Text style={styles.textButton}>Back</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -67,11 +83,11 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 10,
+    width: '90%',
   },
   moodList: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginBottom: 30,
   },
   moodItem: {
     width: 60,
@@ -96,6 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 20,
+    marginTop: 20,
   },
   textButton: {
     color: theme.colorWhite,
@@ -104,5 +121,9 @@ const styles = StyleSheet.create({
     color: theme.colorPurple,
     fontWeight: 'bold',
     marginBottom: 30,
+  },
+  image: {
+    width: 100,
+    height: 100,
   },
 });
