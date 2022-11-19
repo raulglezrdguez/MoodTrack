@@ -1,5 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, Text, Pressable, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 
 import { useAppContext } from '../context/App.provider';
 import { theme } from '../theme';
@@ -15,6 +24,13 @@ const moodOptions: MoodOptionType[] = [
 
 const imgSource = require('../assets/happy.png');
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
   const [hasSelected, setHasSelected] = useState<boolean>(false);
@@ -25,15 +41,33 @@ export const MoodPicker: React.FC = () => {
     if (selectedMood) {
       handleSelectedMood(selectedMood);
       setSelectedMood(undefined);
+      // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      LayoutAnimation.configureNext({
+        duration: 500,
+        create: { type: 'easeIn', property: 'opacity' },
+        update: { type: 'linear', property: 'opacity' },
+        delete: { type: 'easeOut', property: 'opacity' },
+      });
       setHasSelected(true);
     }
   }, [handleSelectedMood, selectedMood]);
+
+  const hideHasSelected = () => {
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    LayoutAnimation.configureNext({
+      duration: 500,
+      create: { type: 'easeInEaseOut', property: 'opacity' },
+      update: { type: 'linear', property: 'opacity' },
+      delete: { type: 'easeOut', property: 'opacity' },
+    });
+    setHasSelected(false);
+  };
 
   if (hasSelected) {
     return (
       <View style={styles.container}>
         <Image source={imgSource} style={styles.image} resizeMode="contain" />
-        <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+        <Pressable style={styles.button} onPress={hideHasSelected}>
           <Text style={styles.textButton}>Back</Text>
         </Pressable>
       </View>

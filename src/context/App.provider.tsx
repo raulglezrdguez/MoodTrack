@@ -26,6 +26,16 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     });
   }, []);
 
+  const handleDeleteMood = useCallback((mood: MoodOptionWithTimestamp) => {
+    setMoodList(currentList => {
+      const newList = currentList.filter(
+        curr => curr.timestamp !== mood.timestamp,
+      );
+      setData({ moods: newList });
+      return newList;
+    });
+  }, []);
+
   const getData = async (): Promise<AppData | null> => {
     try {
       const data = await AsyncStorage.getItem(storageKey);
@@ -55,7 +65,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ moodList, handleSelectedMood }}>
+    <AppContext.Provider
+      value={{ moodList, handleSelectedMood, handleDeleteMood }}>
       {children}
     </AppContext.Provider>
   );
