@@ -6,11 +6,11 @@ import { theme } from '../theme';
 import { MoodOptionType } from '../types';
 
 const moodOptions: MoodOptionType[] = [
-  { emoji: '🤓', description: 'studious' },
-  { emoji: '🤔', description: 'pensive' },
-  { emoji: '🤗', description: 'happy' },
-  { emoji: '🤡', description: 'celebratory' },
-  { emoji: '😤', description: 'frustrated' },
+  { emoji: '🤓', description: 'Studious' },
+  { emoji: '🤔', description: 'Pensive' },
+  { emoji: '🤗', description: 'Happy' },
+  { emoji: '🤡', description: 'Celebratory' },
+  { emoji: '😤', description: 'Frustrated' },
 ];
 
 const imgSource = require('../assets/happy.png');
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   selectedMoodDescription: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyRegular,
     textAlign: 'center',
     color: theme.colorPurple,
   },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     color: theme.colorPurple,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyRegular,
     marginBottom: 30,
   },
   image: {

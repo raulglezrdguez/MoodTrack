@@ -5,7 +5,6 @@ import { Home } from './Home.screen';
 import { History } from './History.screen';
 import { Analytics } from './Analytics.screen';
 import { AnalyticsIcon, HistoryIcon, HomeIcon } from '../components/Icons';
-import { Text } from 'react-native-svg';
 import { theme } from '../theme';
 
 const BottomTabs = createBottomTabNavigator();
@@ -14,6 +13,9 @@ export const BottomTabsNavigator: React.FC = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ route }) => ({
+        headerTitleStyle: {
+          fontFamily: theme.fontFamilyBold,
+        },
         tabBarShowLabel: false,
         tabBarActiveTintColor: theme.colorBlue,
         tabBarActiveBackgroundColor: theme.colorWhite,
