@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Platform, UIManager } from 'react-native';
+import { Platform, StyleSheet, UIManager } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppProvider } from './context/App.provider';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 
@@ -13,10 +14,16 @@ if (
 
 export const App: React.FC = () => {
   return (
-    <AppProvider>
-      <NavigationContainer>
-        <BottomTabsNavigator />
-      </NavigationContainer>
-    </AppProvider>
+    <GestureHandlerRootView style={styles.gestureHandler}>
+      <AppProvider>
+        <NavigationContainer>
+          <BottomTabsNavigator />
+        </NavigationContainer>
+      </AppProvider>
+    </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  gestureHandler: { flex: 1 },
+});

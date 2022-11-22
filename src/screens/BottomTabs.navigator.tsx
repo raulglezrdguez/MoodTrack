@@ -31,6 +31,9 @@ export const BottomTabsNavigator: React.FC = () => {
           if (route.name === 'Analytics') {
             return <AnalyticsIcon color={color} size={size} />;
           }
+          if (route.name === 'GestureScreen') {
+            return <AnalyticsIcon color={color} size={size} />;
+          }
 
           return null;
         },
