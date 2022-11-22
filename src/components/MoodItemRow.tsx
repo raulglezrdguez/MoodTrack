@@ -4,6 +4,7 @@ import format from 'date-fns/format';
 import Reanimated, {
   Layout,
   runOnJS,
+  SlideOutLeft,
   SlideOutRight,
   useAnimatedStyle,
   useSharedValue,
@@ -72,7 +73,11 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
     <GestureDetector gesture={gesture}>
       <Reanimated.View
         layout={Layout.springify()}
-        exiting={SlideOutRight.delay(100)}
+        exiting={
+          Math.random() > 0.5
+            ? SlideOutRight.delay(100)
+            : SlideOutLeft.delay(100)
+        }
         style={[styles.moodItem, animatedStyle]}>
         <Text style={styles.moodValue}>{item.mood.emoji}</Text>
         <View style={styles.descriptionAndDate}>
