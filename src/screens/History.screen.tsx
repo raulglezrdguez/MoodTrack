@@ -1,16 +1,16 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useAppContext } from '../context/App.provider';
 import { MoodItemRow } from '../components/MoodItemRow';
+import Reanimated from 'react-native-reanimated';
 
 export const History: React.FC = () => {
   const { moodList } = useAppContext();
 
   return (
-    <ScrollView>
+    <Reanimated.ScrollView>
       {moodList.map(ml => (
         <MoodItemRow key={ml.timestamp} item={ml} />
       ))}
-    </ScrollView>
+    </Reanimated.ScrollView>
   );
 };
