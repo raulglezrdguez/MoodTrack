@@ -4,9 +4,13 @@ import {
   StyleSheet,
   Text,
   Pressable,
-  Image,
-  LayoutAnimation,
+  // Image,
+  // LayoutAnimation,
 } from 'react-native';
+import Reanimated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { useAppContext } from '../context/App.provider';
 import { theme } from '../theme';
@@ -20,11 +24,11 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '😤', description: 'Frustrated' },
 ];
 
-const imgSource = require('../assets/happy.png');
+// const imgSource = require('../assets/happy.png');
 
 export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
-  const [hasSelected, setHasSelected] = useState<boolean>(false);
+  // const [hasSelected, setHasSelected] = useState<boolean>(false);
 
   const { handleSelectedMood } = useAppContext();
 
@@ -33,37 +37,49 @@ export const MoodPicker: React.FC = () => {
       handleSelectedMood(selectedMood);
       setSelectedMood(undefined);
       // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      LayoutAnimation.configureNext({
-        duration: 500,
-        create: { type: 'easeIn', property: 'opacity' },
-        update: { type: 'linear', property: 'opacity' },
-        delete: { type: 'easeOut', property: 'opacity' },
-      });
-      setHasSelected(true);
+      // LayoutAnimation.configureNext({
+      //   duration: 500,
+      //   create: { type: 'easeIn', property: 'opacity' },
+      //   update: { type: 'linear', property: 'opacity' },
+      //   delete: { type: 'easeOut', property: 'opacity' },
+      // });
+      // setHasSelected(true);
     }
   }, [handleSelectedMood, selectedMood]);
 
-  const hideHasSelected = () => {
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    LayoutAnimation.configureNext({
-      duration: 500,
-      create: { type: 'easeInEaseOut', property: 'opacity' },
-      update: { type: 'linear', property: 'opacity' },
-      delete: { type: 'easeOut', property: 'opacity' },
-    });
-    setHasSelected(false);
-  };
+  // const hideHasSelected = () => {
+  //   // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  //   // LayoutAnimation.configureNext({
+  //   //   duration: 500,
+  //   //   create: { type: 'easeInEaseOut', property: 'opacity' },
+  //   //   update: { type: 'linear', property: 'opacity' },
+  //   //   delete: { type: 'easeOut', property: 'opacity' },
+  //   // });
+  //   setHasSelected(false);
+  // };
 
-  if (hasSelected) {
-    return (
-      <View style={styles.container}>
-        <Image source={imgSource} style={styles.image} resizeMode="contain" />
-        <Pressable style={styles.button} onPress={hideHasSelected}>
-          <Text style={styles.textButton}>Back</Text>
-        </Pressable>
-      </View>
-    );
-  }
+  // if (hasSelected) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Image source={imgSource} style={styles.image} resizeMode="contain" />
+  //       <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+  //         <Text style={styles.textButton}>Back</Text>
+  //       </Pressable>
+  //     </View>
+  //   );
+  // }
+
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      opacity: withTiming(selectedMood ? 1 : 0.5, { duration: 1000 }),
+      transform: [
+        { scale: withTiming(selectedMood ? 1 : 0.8, { duration: 1000 }) },
+      ],
+    }),
+    [selectedMood],
+  );
+
+  const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
   return (
     <View style={styles.container}>
@@ -85,8 +101,8 @@ export const MoodPicker: React.FC = () => {
           </View>
         ))}
       </View>
-      <Pressable
-        style={styles.button}
+      <ReanimatedPressable
+        style={[styles.button, animatedStyle]}
         onPress={handleSelectMood}
         android_ripple={{
           color: theme.colorBlue,
@@ -94,7 +110,7 @@ export const MoodPicker: React.FC = () => {
           radius: 40,
         }}>
         <Text style={styles.textButton}>Choose</Text>
-      </Pressable>
+      </ReanimatedPressable>
     </View>
   );
 };
