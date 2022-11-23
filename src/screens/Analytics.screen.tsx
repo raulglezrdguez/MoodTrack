@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { useAppContext } from '../context/App.provider';
@@ -7,7 +7,7 @@ import { theme } from '../theme';
 export const Analytics: React.FC = () => {
   const { moodList } = useAppContext();
 
-  const moodListData = useCallback(() => {
+  const moodListData = useMemo(() => {
     const result: { label: string; y: number }[] = [];
     moodList.map(ml => {
       const found = result.find(r => r.label === ml.mood.emoji);
@@ -24,7 +24,7 @@ export const Analytics: React.FC = () => {
   return (
     <View style={styles.container}>
       <VictoryPie
-        data={moodListData()}
+        data={moodListData}
         width={width - width / 5}
         // theme={VictoryTheme.material}
         // cornerRadius={({ datum }) => datum.y / 2}
