@@ -7,6 +7,7 @@ import {
   // Image,
   // LayoutAnimation,
 } from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Reanimated, {
   useAnimatedStyle,
   withTiming,
@@ -92,7 +93,13 @@ export const MoodPicker: React.FC = () => {
                 styles.moodItem,
                 option === selectedMood ? styles.selectedMoodItem : null,
               ]}
-              onPress={() => setSelectedMood(option)}>
+              onPress={() => {
+                setSelectedMood(option);
+                ReactNativeHapticFeedback.trigger('impactLight', {
+                  enableVibrateFallback: true,
+                  ignoreAndroidSystemSettings: true,
+                });
+              }}>
               <Text>{option.emoji}</Text>
             </Pressable>
             <Text style={styles.selectedMoodDescription}>

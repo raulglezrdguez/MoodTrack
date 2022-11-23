@@ -1,6 +1,6 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { VictoryLabel, VictoryPie, VictoryTheme } from 'victory-native';
+import { VictoryPie } from 'victory-native';
 import { useAppContext } from '../context/App.provider';
 import { theme } from '../theme';
 
@@ -39,7 +39,7 @@ export const Analytics: React.FC = () => {
           theme.colorLavender,
           theme.colorBlue,
           theme.colorGrey,
-          theme.colorWhite,
+          theme.colorRed,
         ]}
         style={{ labels: { fontSize: 30 } }}
       />
@@ -52,8 +52,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
   },
 });
